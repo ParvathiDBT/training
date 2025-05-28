@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: src
+    database: sourcedb
+    description: Main source data from BigData database.
+    schema: mk_mall
+    tables:
+      - name: orders
+      - name: customers
+        columns:
+          - name: c_custkey
+            tests:
+              - unique
+              - not_null
+      - name: regions
+      - name: nations
+
+      - name: suppliers
+        freshness: 
+          error_after:
+            count: 10
+            period: minute
+          warn_after:
+            count: 3
+            period: minute
+        loaded_at_field: updated_time  
+        
+
+

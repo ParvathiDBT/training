@@ -1,0 +1,43 @@
+version: 2
+models:
+  - name: stg_nations
+    description: Staging table for all nations entity
+    columns:
+      - name: nation_id
+        description: Primary key for the nations entity
+        tests:          
+          - unique:          
+              config:
+                store_failures: true
+          - not_null:
+              config:
+                store_failures: true
+      - name: region_id
+        description: Foreign key for nations entities
+        tests:
+          - relationships:
+              field: region_id
+              to: ref('stg_region')              
+              config:
+                store_failures: true
+  - name:  stg_regions
+    columns:
+      - name:  region_id
+        description: '{{ doc("pkey")}}'
+      
+      - name: name
+        description: '{{ doc("overview")}}'
+        tests:
+          - accepted_values:
+              values:
+                - "AFRICA"
+                - "AMERICA"
+                - "ASIA"
+                - "EUROPE"
+                - "MIDDLE EAST"
+              config:
+                store_failures: true
+                  
+ 
+              
+
